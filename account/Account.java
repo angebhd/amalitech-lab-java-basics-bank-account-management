@@ -8,8 +8,8 @@ abstract class Account {
 
     static int accountCounter = 0;
 
-    void displayAccountDetail();
-    String getAccountType();
+    abstract void displayAccountDetail();
+    abstract String getAccountType();
 
     void deposit(double amount){
         this.balance += amount;
@@ -32,6 +32,14 @@ abstract class Account {
         this.accountNumber = accountNumber;
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
     public double getBalance() {
         return balance;
     }
@@ -43,6 +51,8 @@ abstract class Account {
     public String getStatus() {
         return status;
     }
+
+
 
     public void setStatus(String status) {
         this.status = status;

@@ -1,11 +1,12 @@
-public class SavingsAccount implements Account {
+package account;
+public class SavingsAccount extends Account {
     public SavingsAccount() {
         this.interestRate = 3.5;
         this.minimumBalace = 500;
     }
 
-    private double interestRate;
-    private double minimumBalace;
+    private final double interestRate;
+    private final double minimumBalace;
 
     @Override
     public void displayAccountDetail(){
@@ -20,8 +21,8 @@ public class SavingsAccount implements Account {
 
     @Override
     void withdraw(double amount){
-        if(this.balacnce >= amount+ this.minimumBalace){
-            this.balance -= minimumBalace;
+        if(this.getBalance() >= amount+ this.minimumBalace){
+            this.setBalance(this.getBalance() - minimumBalace);
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");
             return;
         }
@@ -29,7 +30,7 @@ public class SavingsAccount implements Account {
     }
 
     public double calculateInterest(){
-        return this.balance + (this.balance * this.interestRate)
+        return this.getBalance() + (this.getBalance() * this.interestRate);
     }
 
 

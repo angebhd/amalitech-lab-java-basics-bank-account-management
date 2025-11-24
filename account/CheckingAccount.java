@@ -1,4 +1,5 @@
-public class CheckingAccount implements Account {
+package account;
+public class CheckingAccount extends Account {
     public CheckingAccount(){
         this.overdraftLimit = 1000;
         this.monthlyFee = 10;
@@ -19,12 +20,16 @@ public class CheckingAccount implements Account {
 
     @Override
     void withdraw(double amount){
-        if(this.balacnce + this.overdraftLimit >= amount){
-            this.balance -= minimumBalace;
+        if(this.getBalance() + this.overdraftLimit >= amount){
+            this.setBalance(this.getBalance() - amount);
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");
             return;
         }
         System.out.println("Insufficient funds");
+    }
+
+    public void applyMonthlyFee(){
+        this.setBalance(this.getBalance() - this.monthlyFee);
     }
 
 }
