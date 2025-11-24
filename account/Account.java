@@ -1,6 +1,6 @@
 package account;
 import customer.Customer;
-abstract class Account {
+public abstract class Account {
     private String accountNumber;
     private Customer customer;
     private double balance;
