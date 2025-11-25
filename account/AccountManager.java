@@ -1,12 +1,9 @@
-package transaction;
-
-import account.Account;
+package account;
 
 public class AccountManager {
 
-    private Account[] accounts = new Account[50]  ;
+    private final Account[] accounts = new Account[50]  ;
     private int accountCount = 0;
-
     public void addAccount(Account acc) {
         this.accounts[accountCount] = acc;
         this.accountCount++;

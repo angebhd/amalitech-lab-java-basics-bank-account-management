@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public class Transaction{
 
-    public Transaction(String accountNumber, String type, double amount, double balanceAfter) {
+    public Transaction(String accountNumber, TransactionType type, double amount, double balanceAfter) {
         this.accountNumber = accountNumber;
         this.type = type;
         this.amount = amount;
@@ -17,7 +17,7 @@ public class Transaction{
     static  int transactionCounter = 0;
     private String transactionId;
     private String accountNumber;
-    private String type;
+    private TransactionType type;
     private double amount;
     private double balanceAfter;
     private String timestamp;
@@ -38,7 +38,7 @@ public class Transaction{
         return amount;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 

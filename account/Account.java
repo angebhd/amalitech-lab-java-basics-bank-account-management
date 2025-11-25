@@ -8,8 +8,8 @@ public abstract class Account {
 
     static int accountCounter = 0;
 
-    abstract void displayAccountDetail();
-    abstract String getAccountType();
+    public abstract void displayAccountDetail();
+    public abstract String getAccountType();
 
     void deposit(double amount){
         this.balance += amount;
