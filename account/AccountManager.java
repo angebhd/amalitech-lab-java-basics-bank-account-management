@@ -1,9 +1,12 @@
 package account;
 
+import menu.Menu;
+
 public class AccountManager {
 
     private final Account[] accounts = new Account[50]  ;
     private int accountCount = 0;
+    private Menu menu = new Menu();
     public void addAccount(Account acc) {
         this.accounts[accountCount] = acc;
         this.accountCount++;
@@ -18,7 +21,23 @@ public class AccountManager {
     }
 
     public void viewAllAccount(){
-        ///  implementation
+        menu.printTitle("ACCOUNT LISTING");
+        double bankBalance = 0;
+        if(accounts.length == 0){
+            System.out.println("Nothing to show");
+            return;
+        }
+        System.out.println("ACC NO   |   CUSTOMER NAME     |  TYPE   |   BALANCE    |  STATUS   | OTHERS   ");
+        for (int i =0; i< Account.accountCounter; i++){
+            menu.printViewAccountRow(accounts[i]);
+            bankBalance += accounts[i].getBalance();
+        }
+
+        System.out.println();
+        System.out.println("Total Accounts: " + accounts.length);
+        System.out.println("Total Bank Balance: " + bankBalance);
+        System.out.println();
+        System.out.println("Press enter to continue...");
     }
     public double getTotalBalance(){
         ///  implementation

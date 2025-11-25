@@ -1,6 +1,13 @@
 package account;
 import customer.Customer;
 public abstract class Account {
+    public Account( Customer customer, double balance, String status) {
+        this.accountNumber = generateId() ; /// auto generated
+        this.customer = customer;
+        this.balance = balance;
+        this.status = status;
+    }
+
     private String accountNumber;
     private Customer customer;
     private double balance;
@@ -56,5 +63,14 @@ public abstract class Account {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+
+    private String generateId (){
+        Account.accountCounter++;
+        String count = String.valueOf(Account.accountCounter);
+        if (count.length() > 2)
+            return "ACC"+count;
+        return "ACC"+ "0".repeat(3 - count.length()) + count ;
     }
 }

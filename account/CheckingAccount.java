@@ -1,16 +1,22 @@
 package account;
+
+import customer.Customer;
+
 public class CheckingAccount extends Account {
-    public CheckingAccount(){
+    public CheckingAccount( Customer customer, double balance, String status){
+        super(customer, balance, status);
         this.overdraftLimit = 1000;
         this.monthlyFee = 10;
     }
-    private double overdraftLimit;
-    private double monthlyFee;
+    private final double overdraftLimit;
+    private final double monthlyFee;
 
     @Override
     public void displayAccountDetail(){
-        System.out.println("Checking Account");
-        System.out.println("Overdraft detail: " + this.overdraftLimit);
+        System.out.println("Account Details: ");
+        System.out.println("\tCustomer: " + this.getCustomer().getName());
+        System.out.println("\tAccount Type: " + getAccountType());
+        System.out.println("\tCurrent Balance: " + this.getBalance());
     }
 
     @Override

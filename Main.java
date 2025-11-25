@@ -5,6 +5,7 @@ import account.SavingsAccount;
 import customer.Customer;
 import customer.PremiumCustomer;
 import customer.RegularCustomer;
+import helper.Helper;
 import menu.Menu;
 import transaction.Transaction;
 import transaction.TransactionManager;
@@ -17,10 +18,13 @@ class Main{
     static Menu menu = new Menu();
     static TransactionManager transactionManager = new TransactionManager();
     static AccountManager accountManager = new AccountManager();
+    static Helper helper = new Helper();
+
 
 
 	public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        initializeData();
 		System.out.println("Hello World!");
         boolean exitApp = false ;
         char menuChoice;
@@ -32,7 +36,7 @@ class Main{
                     System.out.println("Create Account");
                     break;
                 case '2':
-                    System.out.println("View Accounts");
+                    accountManager.viewAllAccount();
                     break;
                 case '3':
                     System.out.println("Process Transactions");
@@ -87,16 +91,17 @@ class Main{
         System.out.println("2. Checking Account (Overdraft: $1,000, Montly fee: $10)");
         System.out.println("Select type(1-2): ");
         int accountType = scanner.nextInt();
-        newAccount = switch (accountType) {
-            case 1 -> new SavingsAccount();
-            case 2 -> new CheckingAccount();
-            default -> throw new IllegalArgumentException("Invalid account type choice");
-        };
+
 
         System.out.println();
         System.out.println("Enter initial deposit amount: ");
         double deposit = scanner.nextDouble();
 
+        newAccount = switch (accountType) {
+            case 1 -> new SavingsAccount(newCustomer, deposit, "ACTIVE");
+            case 2 -> new CheckingAccount(newCustomer, deposit, "ACTIVE");
+            default -> throw new IllegalArgumentException("Invalid account type choice");
+        };
 
         /// save accounts & Customer somewhere, then display sucess message
         return null;
@@ -113,7 +118,10 @@ class Main{
             System.out.println("Account with accountNo: " + accountNo+ " not found");
             return;
         }
-        account.displayAccountDetail();
+        System.out.println("Account Details: ");
+        System.out.println("\tCustomer: " + account.getCustomer().getName());
+        System.out.println("\tAccount Type: " + account.getAccountType());
+        System.out.println("\tCurrent Balance: " + account.getBalance());
 
         System.out.println();
 
@@ -169,7 +177,12 @@ class Main{
         if (account == null) {
             System.out.println("Account not found");
         }
-        account.displayAccountDetail();
+
+        System.out.println("Account Details: ");
+        System.out.println("\tCustomer: " + account.getCustomer().getName());
+        System.out.println("\tAccount Type: " + account.getAccountType());
+        System.out.println("\tCurrent Balance: " + account.getBalance());
+
         System.out.println();
         System.out.println("___________________________________________");
         Transaction[] transactions = null; /// get transactions
@@ -191,15 +204,15 @@ class Main{
             System.out.println("Total deposits: $" + deposits);
             System.out.println("Total withdrawals: $" + withdrawals);
             System.out.println("Net change: $" + (deposits-withdrawals));
-
-
-
-
-
         }
 
         System.out.println("Press Enter to continue");
 
+    }
 
+    static void initializeData(){
+        for (Account c: helper.generateAccounts()){
+            accountManager.addAccount(c);
+        }
     }
 }

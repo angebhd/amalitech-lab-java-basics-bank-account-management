@@ -5,7 +5,6 @@ import transaction.Transaction;
 
 public class Menu{
  	public void showMainMenu(){
-        printTitle(" BANK ACCOUNT MANAGEMENT - MAIN MENU");
         System.out.println("============================================");
         System.out.println("||                                        ||");
         System.out.println("||   BANK ACCOUNT MANAGEMENT - MAIN MENU  ||");
@@ -46,10 +45,10 @@ public class Menu{
         System.out.println("____________________________________________");
     }
 
-    private void printViewAccountRow(Account account){
-        System.out.print(account.getAccountNumber() + "  |  " + account.getCustomer().getName() +
-                " | " + account.getAccountType() + " | " + account.getBalance() + " | " + account.getStatus() );
-        account.displayAccountDetail();
+    public void printViewAccountRow(Account account){
+        System.out.println(account.getAccountNumber() + "  |  " + account.getCustomer().getName() +
+                " | " + account.getAccountType() + " | $" + account.getBalance() + " | " + account.getStatus() );
+//        account.displayAccountDetail();
 
 
     }
