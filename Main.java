@@ -30,13 +30,16 @@ class Main{
         char menuChoice;
         do{
             menu.showMainMenu();
-            menuChoice = scanner.next().trim().charAt(0);
+            menuChoice = scanner.nextLine().trim().charAt(0);
             switch (menuChoice){
                 case '1':
                     System.out.println("Create Account");
                     break;
                 case '2':
                     accountManager.viewAllAccount();
+                    System.out.println();
+                    System.out.println("Press enter to continue...");
+                    scanner.nextLine();
                     break;
                 case '3':
                     System.out.println("Process Transactions");

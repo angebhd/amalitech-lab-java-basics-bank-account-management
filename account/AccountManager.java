@@ -34,10 +34,9 @@ public class AccountManager {
         }
 
         System.out.println();
-        System.out.println("Total Accounts: " + accounts.length);
+        System.out.println("Total Accounts: " + Account.accountCounter);
         System.out.println("Total Bank Balance: " + bankBalance);
-        System.out.println();
-        System.out.println("Press enter to continue...");
+
     }
     public double getTotalBalance(){
         ///  implementation

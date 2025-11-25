@@ -1,7 +1,6 @@
 package menu;
 
 import account.Account;
-import transaction.Transaction;
 
 public class Menu{
  	public void showMainMenu(){
@@ -32,8 +31,7 @@ public class Menu{
         System.out.println();
         System.out.println("Total Accounts: " + accounts.length);
         System.out.println("Total Bank Balance: " + bankBalance);
-        System.out.println();
-        System.out.println("Press enter to continue...");
+
     }
 
 
