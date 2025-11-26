@@ -6,11 +6,11 @@ public class SavingsAccount extends Account {
     public SavingsAccount(Customer customer, double balance, String status){
         super(customer, balance, status);
         this.interestRate = 3.5;
-        this.minimumBalace = 500;
+        this.minimumBalance = 500;
     }
 
     private final double interestRate;
-    private final double minimumBalace;
+    private final double minimumBalance;
 
     @Override
     public void displayAccountDetail(){
@@ -27,12 +27,12 @@ public class SavingsAccount extends Account {
 
     @Override
     public void withdraw(double amount){
-        if(this.getBalance() >= amount+ this.minimumBalace){
-            this.setBalance(this.getBalance() - minimumBalace);
+        if(this.getBalance() >= amount+ this.minimumBalance){
+            this.setBalance(this.getBalance() - minimumBalance);
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");
             return;
         }
-        System.out.println("Insufficient funds");
+        throw new IllegalArgumentException("Insuficient Balance");
     }
 
     public double calculateInterest(){
@@ -44,6 +44,6 @@ public class SavingsAccount extends Account {
     }
 
     public double getMinimumBalace() {
-        return minimumBalace;
+        return this.minimumBalance;
     }
 }

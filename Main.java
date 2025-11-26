@@ -211,9 +211,17 @@ class Main{
             System.out.println();
             return;
         }
-        if (transactionType.equals(TransactionType.WITHDRAW))
+        if (transactionType.equals(TransactionType.WITHDRAW)) {
+            try{
             account.withdraw(amount);
-        else
+            }catch (IllegalArgumentException e){
+                System.out.println("_____________________________________________");
+                System.out.println("Transaction failed!!!");
+                System.out.println("Reason: " + e.getMessage());
+                System.out.println();
+                return;
+            }
+        }else
             account.deposit(amount);
         transactionManager.addTransaction(newTransaction);
 
@@ -224,7 +232,7 @@ class Main{
     static void showViewTransactionHistoryROW(){
         menu.printTitle("VIEW TRANSACTION HISTORY");
         System.out.println();
-        System.out.println("Enter ccount number: ");
+        System.out.print("Enter ccount number: ");
         String accountNo = scanner.next().trim().toUpperCase();
         scanner.reset();
 

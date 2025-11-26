@@ -35,7 +35,7 @@ public class CheckingAccount extends Account {
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");
             return;
         }
-        System.out.println("Insufficient funds");
+        throw new IllegalArgumentException("Insuficient Balance");
     }
 
     public void applyMonthlyFee(){
