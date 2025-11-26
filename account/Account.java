@@ -18,11 +18,11 @@ public abstract class Account {
     public abstract void displayAccountDetail();
     public abstract String getAccountType();
 
-    void deposit(double amount){
+    public void deposit(double amount){
         this.balance += amount;
     }
 
-    void withdraw(double amount){
+    public void withdraw(double amount){
         if(this.balance >= amount){
             this.balance -= amount;
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");

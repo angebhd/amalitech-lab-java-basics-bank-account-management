@@ -33,31 +33,39 @@ class Main{
             menuChoice = scanner.nextLine().trim().charAt(0);
             switch (menuChoice){
                 case '1':
-                    System.out.println("Create Account");
                     createAccount();
-                    System.out.println("Press Enter to continue...");
+                    System.out.print("Press Enter to continue...");
                     scanner.nextLine();
+                    System.out.println();
                     break;
                 case '2':
                     accountManager.viewAllAccount();
                     System.out.println();
-                    System.out.println("Press enter to continue...");
+                    System.out.print("Press enter to continue...");
                     scanner.nextLine();
+                    System.out.println();
                     break;
                 case '3':
-                    System.out.println("Process Transactions");
+                    processTransaction();
+                    System.out.print("Press enter to continue...");
+                    scanner.nextLine();
+                    System.out.println();
                     break;
                 case '4':
-                    System.out.println("View Transaction history");
+                    showViewTransactionHistoryROW();
+                    System.out.print("Press enter to continue...");
+                    scanner.nextLine();
+                    System.out.println();
                     break;
                 case '5':
                     System.out.println("Thank you for using Bank Account Management System !");
                     System.out.println("GoodBye!");
                     exitApp = true;
             }
-
         }while (!exitApp);
-	}
+        scanner.close();
+
+    }
 
     static void createAccount(){
         Account newAccount;
@@ -66,7 +74,7 @@ class Main{
         menu.printTitle("ACCOUNT CREATION");
         System.out.println();
         System.out.print("Enter customer name: ");
-        String name = scanner.next().trim();
+        String name = scanner.nextLine().trim();
         scanner.reset();
 
         System.out.print("Enter customer age: ");
@@ -146,21 +154,23 @@ class Main{
 
     }
 
-    void processTransaction(){
+    static void processTransaction(){
         TransactionType transactionType;
         menu.printTitle("PROCESS TRANSACTION");
-
-        System.out.println("Enter Account number: ");
-        String accountNo = scanner.next().trim();
-        Account account = accountManager.findAccount(accountNo);
+        scanner.reset();
+        System.out.print("Enter Account number: ");
+        String accountNo = scanner.next().trim().toUpperCase();
+        scanner.reset();
+        final Account account = accountManager.findAccount(accountNo);
         if (account == null) {
             System.out.println("Account with accountNo: " + accountNo+ " not found");
+            System.out.println();
             return;
         }
         System.out.println("Account Details: ");
         System.out.println("\tCustomer: " + account.getCustomer().getName());
         System.out.println("\tAccount Type: " + account.getAccountType());
-        System.out.println("\tCurrent Balance: " + account.getBalance());
+        System.out.println("\tCurrent Balance: $" + account.getBalance());
 
         System.out.println();
 
@@ -168,19 +178,21 @@ class Main{
         System.out.println("1. Deposit");
         System.out.println("2. Withdrawal");
         System.out.println();
-        System.out.println("Select type(1-2): ");
-        int choosenTransaction = scanner.nextInt();
-        transactionType = switch (choosenTransaction){
+        System.out.print("Select type(1-2): ");
+        int chosenTransaction = scanner.nextInt();
+        scanner.reset();
+        transactionType = switch (chosenTransaction){
             case 1 -> TransactionType.DEPOSIT;
             case 2 -> TransactionType.WITHDRAW;
             default -> throw new IllegalArgumentException("Invalid transaction type");
         };
         System.out.println();
 
-        System.out.println("Enter amount: ");
-        double amount = scanner.nextDouble();
-
-        Transaction newTransaction = new Transaction(accountNo, transactionType, amount, account.getBalance() - amount);
+        System.out.print("Enter amount: ");
+        final double amount = scanner.nextDouble();
+        scanner.reset();
+        final int operation = transactionType.equals(TransactionType.DEPOSIT)? 1 : -1;
+        Transaction newTransaction = new Transaction(accountNo, transactionType, amount, account.getBalance() + (amount * operation));
 
         menu.printTitle("TRANSACTION CONFIRMATION");
         System.out.println("Transaction ID: " + newTransaction.getTransactionId());
@@ -191,26 +203,30 @@ class Main{
         System.out.println("Date/Time: " + newTransaction.getTimestamp());
         System.out.println("_____________________________________________");
         System.out.println();
-        System.out.println("Confirm Transaction? (Y/N): ");
-        char confirm = scanner.next().trim().charAt(0);
+        System.out.print("Confirm Transaction? (Y/N): ");
+        char confirm = scanner.next().trim().toUpperCase().charAt(0);
+        scanner.reset();
         if(confirm != 'Y'){
             System.out.println("Transaction canceled .....");
+            System.out.println();
             return;
         }
+        if (transactionType.equals(TransactionType.WITHDRAW))
+            account.withdraw(amount);
+        else
+            account.deposit(amount);
         transactionManager.addTransaction(newTransaction);
 
         System.out.println("Transaction completed sucessfully!");
-        System.out.println("Press Enter to continue");
-        scanner.next();
-
 
     }
 
-    public void showViewTransactionHistoryROW(Transaction transaction){
+    static void showViewTransactionHistoryROW(){
         menu.printTitle("VIEW TRANSACTION HISTORY");
         System.out.println();
         System.out.println("Enter ccount number: ");
-        String accountNo = scanner.next().trim();
+        String accountNo = scanner.next().trim().toUpperCase();
+        scanner.reset();
 
         Account account = accountManager.findAccount(accountNo);
         if (account == null) {
@@ -220,32 +236,10 @@ class Main{
         System.out.println("Account Details: ");
         System.out.println("\tCustomer: " + account.getCustomer().getName());
         System.out.println("\tAccount Type: " + account.getAccountType());
-        System.out.println("\tCurrent Balance: " + account.getBalance());
-
+        System.out.println("\tCurrent Balance: $" + account.getBalance());
         System.out.println();
-        System.out.println("___________________________________________");
-        Transaction[] transactions = null; /// get transactions
-        if (transactions == null || transactions.length == 0) {
-            System.out.println("No transactions recorded for this account");
-        }else{
-            System.out.println("TXN  | DATE/TIME  |  TYPE | AMOUNT | BALANCE ");
-            System.out.println("_____________________________________________");
-            double deposits = 0;
-            double withdrawals = 0;
-            for (Transaction t: transactions) {
-                double transactionType = t.getType().equals(TransactionType.DEPOSIT) ? 1 : -1;
-                System.out.println(t.getTransactionId() + " | " + t.getTimestamp() + " | " + t.getType().toString()  + " | $"
-                + transactionType*t.getAmount() + " | $" + t.getBalanceAfter()
-                );
-            }
-            System.out.println("___________________________________________");
-            System.out.println("Total transactions: " + transactions.length);
-            System.out.println("Total deposits: $" + deposits);
-            System.out.println("Total withdrawals: $" + withdrawals);
-            System.out.println("Net change: $" + (deposits-withdrawals));
-        }
 
-        System.out.println("Press Enter to continue");
+        transactionManager.viewTransactionsByAccount(accountNo);
 
     }
 

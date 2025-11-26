@@ -1,17 +1,19 @@
 package transaction;
 
+import customer.Customer;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction{
 
     public Transaction(String accountNumber, TransactionType type, double amount, double balanceAfter) {
+        this.transactionId = generateId();
         this.accountNumber = accountNumber;
         this.type = type;
         this.amount = amount;
         this.balanceAfter = balanceAfter;
-        this.timestamp = LocalDateTime.now().toString();
-
-        /// Automatically generate transactionId
+        this.timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm a"));
     }
 
     static  int transactionCounter = 0;
@@ -52,6 +54,14 @@ public class Transaction{
 
     public static int getTransactionCounter() {
         return transactionCounter;
+    }
+
+    private String generateId (){
+        Transaction.transactionCounter++;
+        String count = String.valueOf(Transaction.transactionCounter);
+        if (count.length() > 2)
+            return "TXN"+count;
+        return "TXN"+ "0".repeat(3 - count.length()) + count ;
     }
 
 

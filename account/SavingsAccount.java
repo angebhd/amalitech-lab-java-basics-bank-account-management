@@ -26,7 +26,7 @@ public class SavingsAccount extends Account {
     }
 
     @Override
-    void withdraw(double amount){
+    public void withdraw(double amount){
         if(this.getBalance() >= amount+ this.minimumBalace){
             this.setBalance(this.getBalance() - minimumBalace);
             System.out.println("Amount " + amount + "$ sucessfully withdrawn");

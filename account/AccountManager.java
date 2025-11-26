@@ -13,9 +13,9 @@ public class AccountManager {
     }
 
     public Account findAccount(String accountNumber){
-        for(Account a : this.accounts){
-            if (a.getAccountNumber().equalsIgnoreCase(accountNumber))
-                return a;
+        for (int i = 0; i < accountCount ; i++) {
+            if (this.accounts[i].getAccountNumber().equalsIgnoreCase(accountNumber))
+                return this.accounts[i];
         }
         return null;
     }
