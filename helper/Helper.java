@@ -7,6 +7,8 @@ import customer.Customer;
 import customer.PremiumCustomer;
 import customer.RegularCustomer;
 
+import java.util.Scanner;
+
 public class Helper {
 
     public Account[] generateAccounts(){
@@ -30,4 +32,45 @@ public class Helper {
 
         return new Customer[]{cust1, cust2, cust3, cust4, cust5};
     }
+
+
+        public int validateIntInput(Scanner scanner){
+            return validateIntInput(scanner, Integer.MAX_VALUE);
+        }
+
+        public int validateIntInput(Scanner scanner, int max){
+            if(!scanner.hasNextInt()){
+                System.out.print("Invalid integer, try again...");
+                return validateIntInput(scanner, max);
+            }
+            int input = scanner.nextInt();
+            if(input >= max && input <= 0){
+                System.out.print("Invalid number, choose a number in the specified range try again...");
+                return validateIntInput(scanner, max);
+            }
+            scanner.nextLine();
+            return input;
+        }
+
+    public double validatedoubleInput(Scanner scanner) {
+        return validatedoubleInput(scanner, 1,"Invalid number, should be greater than 0 try again...");
+    }
+    public double validatedoubleInput(Scanner scanner, String msg) {
+        return validatedoubleInput(scanner, 1, msg);
+    }
+        public double validatedoubleInput(Scanner scanner, double min, String msg){
+        if(!scanner.hasNextDouble()){
+            System.out.print(msg);
+            return validatedoubleInput(scanner, min, msg);
+        }
+        double input = scanner.nextDouble();
+        if(input < min){
+            System.out.print(msg);
+            return validatedoubleInput(scanner, min, msg);
+        }
+        scanner.nextLine();
+        return input;
+    }
+
+
 }

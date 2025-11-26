@@ -27,37 +27,37 @@ class Main{
         initializeData();
 		System.out.println("Hello World!");
         boolean exitApp = false ;
-        char menuChoice;
+        int menuChoice;
         do{
             menu.showMainMenu();
-            menuChoice = scanner.nextLine().trim().charAt(0);
+//            scanner.next();
+            menuChoice = helper.validateIntInput(scanner, 5);
             switch (menuChoice){
-                case '1':
+                case 1:
                     createAccount();
                     System.out.print("Press Enter to continue...");
                     scanner.nextLine();
                     System.out.println();
                     break;
-                case '2':
+                case 2:
                     accountManager.viewAllAccount();
-                    System.out.println();
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
                     System.out.println();
                     break;
-                case '3':
+                case 3:
                     processTransaction();
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
                     System.out.println();
                     break;
-                case '4':
+                case 4:
                     showViewTransactionHistoryROW();
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
                     System.out.println();
                     break;
-                case '5':
+                case 5:
                     System.out.println("Thank you for using Bank Account Management System !");
                     System.out.println("GoodBye!");
                     exitApp = true;
@@ -75,27 +75,22 @@ class Main{
         System.out.println();
         System.out.print("Enter customer name: ");
         String name = scanner.nextLine().trim();
-        scanner.reset();
 
         System.out.print("Enter customer age: ");
         int age = scanner.nextInt();
-        scanner.reset();
 
         System.out.print("Enter customer contact: ");
         String contact = scanner.next().trim();
-        scanner.reset();
 
         System.out.print("Enter customer address: ");
         String address = scanner.next().trim();
-        scanner.reset();
 
         System.out.println();
         System.out.println("Customer Type: ");
         System.out.println("1. Regular Customer");
         System.out.println("2. Premium Customer");
         System.out.print("Select type(1-2): ");
-        int customerType = scanner.nextInt();
-        scanner.reset();
+        int customerType = helper.validateIntInput(scanner, 2);
 
         ///  Creatting customer depending on user choice
         newCustomer = switch (customerType) {
@@ -109,14 +104,17 @@ class Main{
         System.out.println("1. Savings Account (Interest: 3.5%, Min Balance: $500)");
         System.out.println("2. Checking Account (Overdraft: $1,000, Montly fee: $10)");
         System.out.print("Select type(1-2): ");
-        int accountType = scanner.nextInt();
-        scanner.reset();
+        int accountType = helper.validateIntInput(scanner, 2);;
 
 
         System.out.println();
-        System.out.print("Enter initial deposit amount: ");
-        double deposit = scanner.nextDouble();
-        scanner.reset();
+        System.out.print("Enter initial deposit amount: $");
+        double deposit;
+        if(accountType == 1){
+            deposit = helper.validatedoubleInput(scanner, 500, "Invalid amount, minimum balance is $" + 500 + " for saving account, try again: ");;
+        }else{
+            deposit = helper.validatedoubleInput(scanner);;
+        }
 
         newAccount = switch (accountType) {
             case 1 -> new SavingsAccount(newCustomer, deposit, "ACTIVE");
@@ -145,8 +143,8 @@ class Main{
             ///  if premium customer, check if monthly fees are waived
             if(((CheckingAccount) newAccount).getMonthlyFee() == 0){
                 System.out.print("( WAIVED - Premium Customer)");
+                System.out.println("\n");
             }
-            System.out.println("\n");
         }
         System.out.println("Initial Balance: "+ newAccount.getBalance());
         System.out.println("Status: "+ newAccount.getStatus());
@@ -159,8 +157,7 @@ class Main{
         menu.printTitle("PROCESS TRANSACTION");
         scanner.reset();
         System.out.print("Enter Account number: ");
-        String accountNo = scanner.next().trim().toUpperCase();
-        scanner.reset();
+        String accountNo = scanner.nextLine().trim().toUpperCase();
         final Account account = accountManager.findAccount(accountNo);
         if (account == null) {
             System.out.println("Account with accountNo: " + accountNo+ " not found");
@@ -179,8 +176,7 @@ class Main{
         System.out.println("2. Withdrawal");
         System.out.println();
         System.out.print("Select type(1-2): ");
-        int chosenTransaction = scanner.nextInt();
-        scanner.reset();
+        int chosenTransaction = helper.validateIntInput(scanner, 2);;
         transactionType = switch (chosenTransaction){
             case 1 -> TransactionType.DEPOSIT;
             case 2 -> TransactionType.WITHDRAW;
@@ -189,8 +185,7 @@ class Main{
         System.out.println();
 
         System.out.print("Enter amount: ");
-        final double amount = scanner.nextDouble();
-        scanner.reset();
+        final double amount = helper.validatedoubleInput(scanner);;
         final int operation = transactionType.equals(TransactionType.DEPOSIT)? 1 : -1;
         Transaction newTransaction = new Transaction(accountNo, transactionType, amount, account.getBalance() + (amount * operation));
 
