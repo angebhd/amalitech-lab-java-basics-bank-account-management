@@ -111,9 +111,9 @@ class Main{
         System.out.print("Enter initial deposit amount: $");
         double deposit;
         if(accountType == 1){
-            deposit = helper.validatedoubleInput(scanner, 500, "Invalid amount, minimum balance is $" + 500 + " for saving account, try again: ");;
+            deposit = helper.validateDoubleInput(scanner, 500, "Invalid amount, minimum balance is $" + 500 + " for saving account, try again: ");;
         }else{
-            deposit = helper.validatedoubleInput(scanner);;
+            deposit = helper.validateDoubleInput(scanner);;
         }
 
         newAccount = switch (accountType) {
@@ -185,7 +185,7 @@ class Main{
         System.out.println();
 
         System.out.print("Enter amount: ");
-        final double amount = helper.validatedoubleInput(scanner);;
+        final double amount = helper.validateDoubleInput(scanner);;
         final int operation = transactionType.equals(TransactionType.DEPOSIT)? 1 : -1;
         Transaction newTransaction = new Transaction(accountNo, transactionType, amount, account.getBalance() + (amount * operation));
 

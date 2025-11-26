@@ -38,39 +38,51 @@ public class Helper {
             return validateIntInput(scanner, Integer.MAX_VALUE);
         }
 
-        public int validateIntInput(Scanner scanner, int max){
-            if(!scanner.hasNextInt()){
-                System.out.print("Invalid integer, try again...");
-                return validateIntInput(scanner, max);
+    public int validateIntInput(Scanner scanner, int max) {
+        int input;
+        while (true) {
+            if (!scanner.hasNextInt()) {
+                System.out.print("Invalid integer, try again: ");
+                scanner.nextLine(); // Consume the invalid input
+                continue;  // Continue prompting until a valid integer is entered
             }
-            int input = scanner.nextInt();
-            if(input >= max && input <= 0){
-                System.out.print("Invalid number, choose a number in the specified range try again...");
-                return validateIntInput(scanner, max);
+            input = scanner.nextInt();
+            if (input <= 0 || input >= max) {
+                System.out.print("Invalid number, choose a number in the specified range (1 - " + (max) + "). Try again: ");
+            } else {
+                break;  // Exit the loop if the input is valid
             }
-            scanner.nextLine();
-            return input;
         }
-
-    public double validatedoubleInput(Scanner scanner) {
-        return validatedoubleInput(scanner, 1,"Invalid number, should be greater than 0 try again...");
-    }
-    public double validatedoubleInput(Scanner scanner, String msg) {
-        return validatedoubleInput(scanner, 1, msg);
-    }
-        public double validatedoubleInput(Scanner scanner, double min, String msg){
-        if(!scanner.hasNextDouble()){
-            System.out.print(msg);
-            return validatedoubleInput(scanner, min, msg);
-        }
-        double input = scanner.nextDouble();
-        if(input < min){
-            System.out.print(msg);
-            return validatedoubleInput(scanner, min, msg);
-        }
-        scanner.nextLine();
+        scanner.nextLine();  // Clear the buffer
         return input;
     }
 
+    public double validateDoubleInput(Scanner scanner) {
+        return validateDoubleInput(scanner, "Invalid number, should be greater than 0 try again...");
+    }
+    public double validateDoubleInput(Scanner scanner, String msg) {
+        return validateDoubleInput(scanner, 1, msg);
+    }
+    // Validate double input with a minimum value and a custom message
+    public double validateDoubleInput(Scanner scanner, double min, String msg) {
+        double input;
+        while (true) {
+            if (!scanner.hasNextDouble()) {
+                System.out.print(msg);
+                scanner.nextLine();  // Consume the invalid input
+                continue;  // Continue prompting until a valid double is entered
+            }
 
+            input = scanner.nextDouble();
+            if (input < min) {
+                System.out.print(msg);
+            } else {
+                break;  // Exit the loop if the input is valid
+            }
+        }
+        scanner.nextLine();  // Clear the buffer
+        return input;
+    }
 }
+
+
