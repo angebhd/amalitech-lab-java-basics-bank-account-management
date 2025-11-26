@@ -7,7 +7,7 @@ public class CheckingAccount extends Account {
     public CheckingAccount( Customer customer, double balance, String status){
         super(customer, balance, status);
         this.overdraftLimit = 1000;
-        if (customer instanceof PremiumCustomer)
+        if (customer instanceof PremiumCustomer && ((PremiumCustomer) customer).hasWaivedFees(balance))
             this.monthlyFee = 0;
         else
             this.monthlyFee = 10;

@@ -4,21 +4,21 @@ public class PremiumCustomer extends Customer{
     public PremiumCustomer(String name, int age, String address, String contact) {
         super(name, age, address, contact);
     }
-    private double minimumBalance;
+    private double minimumBalance = 10000;
 
     @Override
-    void displayCustomerDetail() {
+    public void displayCustomerDetail() {
         System.out.println("Premium Account");
 
     }
 
     @Override
-    String getCustomerType() {
+    public String getCustomerType() {
         return "Premium";
     }
 
-    public boolean hasWaivedFees(){
-        return true;
+    public boolean hasWaivedFees(double balance){
+        return balance >= minimumBalance;
     }
 
     public double getMinimumBalance() {

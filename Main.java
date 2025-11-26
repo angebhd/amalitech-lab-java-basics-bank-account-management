@@ -34,6 +34,9 @@ class Main{
             switch (menuChoice){
                 case '1':
                     System.out.println("Create Account");
+                    createAccount();
+                    System.out.println("Press Enter to continue...");
+                    scanner.nextLine();
                     break;
                 case '2':
                     accountManager.viewAllAccount();
@@ -56,30 +59,35 @@ class Main{
         }while (!exitApp);
 	}
 
-    Account createAccount(){
+    static void createAccount(){
         Account newAccount;
         Customer newCustomer;
 
         menu.printTitle("ACCOUNT CREATION");
         System.out.println();
-        System.out.println("Enter customer name: ");
+        System.out.print("Enter customer name: ");
         String name = scanner.next().trim();
+        scanner.reset();
 
-        System.out.println("Enter customer age: ");
+        System.out.print("Enter customer age: ");
         int age = scanner.nextInt();
+        scanner.reset();
 
-        System.out.println("Enter customer contact: ");
+        System.out.print("Enter customer contact: ");
         String contact = scanner.next().trim();
+        scanner.reset();
 
-        System.out.println("Enter customer address: ");
+        System.out.print("Enter customer address: ");
         String address = scanner.next().trim();
+        scanner.reset();
 
         System.out.println();
         System.out.println("Customer Type: ");
         System.out.println("1. Regular Customer");
         System.out.println("2. Premium Customer");
-        System.out.println("Select type(1-2): ");
+        System.out.print("Select type(1-2): ");
         int customerType = scanner.nextInt();
+        scanner.reset();
 
         ///  Creatting customer depending on user choice
         newCustomer = switch (customerType) {
@@ -92,13 +100,15 @@ class Main{
         System.out.println("Account Type: ");
         System.out.println("1. Savings Account (Interest: 3.5%, Min Balance: $500)");
         System.out.println("2. Checking Account (Overdraft: $1,000, Montly fee: $10)");
-        System.out.println("Select type(1-2): ");
+        System.out.print("Select type(1-2): ");
         int accountType = scanner.nextInt();
+        scanner.reset();
 
 
         System.out.println();
-        System.out.println("Enter initial deposit amount: ");
+        System.out.print("Enter initial deposit amount: ");
         double deposit = scanner.nextDouble();
+        scanner.reset();
 
         newAccount = switch (accountType) {
             case 1 -> new SavingsAccount(newCustomer, deposit, "ACTIVE");
@@ -107,7 +117,33 @@ class Main{
         };
 
         /// save accounts & Customer somewhere, then display sucess message
-        return null;
+        accountManager.addAccount(newAccount);
+
+        System.out.println("\nAccount Created Successfully!");
+        System.out.println("Account Number: "+ newAccount.getAccountNumber());
+        System.out.println("Customer "+ newAccount.getCustomer().getName() + " ( " + newAccount.getCustomer().getCustomerType() + " )") ;
+        System.out.println("Account Type: "+ newAccount.getAccountType());
+
+        ///  display saving account details
+        if(newAccount instanceof SavingsAccount){
+            System.out.println("Interest Rate: "+ ((SavingsAccount) newAccount).getInterestRate() + "%");
+            System.out.println("Minimum balance: "+ ((SavingsAccount) newAccount).getMinimumBalace());
+
+        }
+        /// for Checking account display checking account information details
+        if(newAccount instanceof  CheckingAccount){
+            System.out.println("Overfraft Limit: "+ ((CheckingAccount) newAccount).getOverdraftLimit());
+            System.out.print("Montly fee: $" + ((CheckingAccount) newAccount).getMonthlyFee());
+            ///  if premium customer, check if monthly fees are waived
+            if(((CheckingAccount) newAccount).getMonthlyFee() == 0){
+                System.out.print("( WAIVED - Premium Customer)");
+            }
+            System.out.println("\n");
+        }
+        System.out.println("Initial Balance: "+ newAccount.getBalance());
+        System.out.println("Status: "+ newAccount.getStatus());
+        System.out.println();
+
     }
 
     void processTransaction(){

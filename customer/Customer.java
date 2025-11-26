@@ -1,13 +1,16 @@
 package customer;
 
+import account.Account;
+
 public abstract class Customer {
     public Customer(String name, int age, String address, String contact) {
+        this.customerId = generateId();
         this.address = address;
         this.contact = contact;
         this.age = age;
         this.name = name;
     }
-    private String customerId;
+    private final String customerId;
     private String name;
     private int age;
     private String contact;
@@ -16,8 +19,8 @@ public abstract class Customer {
     public static int customerCounter;
 
 
-    abstract void displayCustomerDetail();
-    abstract String getCustomerType();
+    public abstract void displayCustomerDetail();
+    public abstract String getCustomerType();
 
 
     public String getName() {
@@ -56,7 +59,14 @@ public abstract class Customer {
         return customerId;
     }
 
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
+//    public void setCustomerId(String customerId) {
+//        this.customerId = customerId;
+//    }
+private String generateId (){
+    Customer.customerCounter++;
+    String count = String.valueOf(Customer.customerCounter);
+    if (count.length() > 2)
+        return "CUS"+count;
+    return "CUS"+ "0".repeat(3 - count.length()) + count ;
+}
 }
