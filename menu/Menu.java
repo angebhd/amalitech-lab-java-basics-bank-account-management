@@ -1,6 +1,8 @@
 package menu;
 
 import account.Account;
+import account.CheckingAccount;
+import account.SavingsAccount;
 
 public class Menu{
  	public void showMainMenu(){
@@ -44,10 +46,15 @@ public class Menu{
     }
 
     public void printViewAccountRow(Account account){
-        System.out.println(account.getAccountNumber() + "  |  " + account.getCustomer().getName() +
-                " | " + account.getAccountType() + " | $" + account.getBalance() + " | " + account.getStatus() );
-//        account.displayAccountDetail();
+        System.out.print(account.getAccountNumber() + "  |  " + account.getCustomer().getName() +
+                " | " + account.getAccountType() + " | $" + account.getBalance() + " | " + account.getStatus() + " | " );
+        if(account instanceof SavingsAccount)
+            System.out.print("Interest Rate: "+ ((SavingsAccount) account).getInterestRate() + "% | Min balance: $" + ((SavingsAccount) account).getMinimumBalace());
 
+        if (account instanceof CheckingAccount)
+            System.out.print("Overdraft Limit: $" + ((CheckingAccount) account).getOverdraftLimit() + " | Monthly fee: $" + ((CheckingAccount) account).getMonthlyFee());
+
+        System.out.println("\n"+"-------------------------------------------------------------------------------");
 
     }
 

@@ -6,7 +6,7 @@ public class AccountManager {
 
     private final Account[] accounts = new Account[50]  ;
     private int accountCount = 0;
-    private Menu menu = new Menu();
+    private final Menu menu = new Menu();
     public void addAccount(Account acc) {
         this.accounts[accountCount] = acc;
         this.accountCount++;
@@ -28,6 +28,7 @@ public class AccountManager {
             return;
         }
         System.out.println("ACC NO   |   CUSTOMER NAME     |  TYPE   |   BALANCE    |  STATUS   | OTHERS   ");
+        System.out.println("_______________________________________________________________________________");
         for (int i =0; i< Account.accountCounter; i++){
             menu.printViewAccountRow(accounts[i]);
             bankBalance += accounts[i].getBalance();

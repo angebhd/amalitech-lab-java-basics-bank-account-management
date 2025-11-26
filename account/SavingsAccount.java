@@ -39,6 +39,11 @@ public class SavingsAccount extends Account {
         return this.getBalance() + (this.getBalance() * this.interestRate);
     }
 
+    public double getInterestRate() {
+        return interestRate;
+    }
 
-
+    public double getMinimumBalace() {
+        return minimumBalace;
+    }
 }

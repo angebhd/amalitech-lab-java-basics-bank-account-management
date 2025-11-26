@@ -1,12 +1,16 @@
 package account;
 
 import customer.Customer;
+import customer.PremiumCustomer;
 
 public class CheckingAccount extends Account {
     public CheckingAccount( Customer customer, double balance, String status){
         super(customer, balance, status);
         this.overdraftLimit = 1000;
-        this.monthlyFee = 10;
+        if (customer instanceof PremiumCustomer)
+            this.monthlyFee = 0;
+        else
+            this.monthlyFee = 10;
     }
     private final double overdraftLimit;
     private final double monthlyFee;
@@ -38,4 +42,11 @@ public class CheckingAccount extends Account {
         this.setBalance(this.getBalance() - this.monthlyFee);
     }
 
+    public double getOverdraftLimit() {
+        return overdraftLimit;
+    }
+
+    public double getMonthlyFee() {
+        return monthlyFee;
+    }
 }
