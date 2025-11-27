@@ -34,9 +34,6 @@ public class Helper {
     }
 
 
-        public int validateIntInput(Scanner scanner){
-            return validateIntInput(scanner, Integer.MAX_VALUE);
-        }
 
     public int validateIntInput(Scanner scanner, int max) {
         int input;
@@ -47,7 +44,7 @@ public class Helper {
                 continue;  // Continue prompting until a valid integer is entered
             }
             input = scanner.nextInt();
-            if (input <= 0 || input >= max) {
+            if (input <= 0 || input > max) {
                 System.out.print("Invalid number, choose a number in the specified range (1 - " + (max) + "). Try again: ");
             } else {
                 break;  // Exit the loop if the input is valid
@@ -70,17 +67,17 @@ public class Helper {
             if (!scanner.hasNextDouble()) {
                 System.out.print(msg);
                 scanner.nextLine();  // Consume the invalid input
-                continue;  // Continue prompting until a valid double is entered
+                continue;
             }
 
             input = scanner.nextDouble();
             if (input < min) {
                 System.out.print(msg);
             } else {
-                break;  // Exit the loop if the input is valid
+                break;
             }
         }
-        scanner.nextLine();  // Clear the buffer
+        scanner.nextLine();
         return input;
     }
 }

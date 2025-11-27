@@ -22,7 +22,6 @@ public class AccountManager {
 
     public void viewAllAccount(){
         menu.printTitle("ACCOUNT LISTING");
-        double bankBalance = 0;
         if(accounts.length == 0){
             System.out.println("Nothing to show");
             return;
@@ -31,22 +30,25 @@ public class AccountManager {
         System.out.println("_______________________________________________________________________________");
         for (int i =0; i< Account.accountCounter; i++){
             menu.printViewAccountRow(accounts[i]);
-            bankBalance += accounts[i].getBalance();
         }
 
         System.out.println();
         System.out.println("Total Accounts: " + Account.accountCounter);
-        System.out.println("Total Bank Balance: " + bankBalance);
+        System.out.println("Total Bank Balance: " + getTotalBalance());
 
     }
     public double getTotalBalance(){
-        ///  implementation
+        double totalBalance = 0;
 
-        return 23.0;
+        for(Account ac: this.accounts){
+            if(ac == null)
+                break;
+            totalBalance += ac.getBalance();
+        }
+
+
+        return totalBalance;
     }
 
-    public int getAccountCount(){
-        return this.accountCount+1;
-    }
 }
 

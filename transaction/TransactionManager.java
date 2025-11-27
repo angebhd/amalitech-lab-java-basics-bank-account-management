@@ -17,7 +17,7 @@ public class TransactionManager {
         boolean found = false;
         double deposits = 0;
         double withdrawals = 0;
-        for(int i =0; i < this.transactionCount; i++){
+        for(int i =0; i < getTransactionCount(); i++){
             if(this.transactions[i].getAccountNumber().equals(accountNumber)){
 
                 if (!found) {
@@ -72,6 +72,6 @@ public class TransactionManager {
     }
 
     public int getTransactionCount(){
-        return this.transactionCount + 1;
+        return this.transactionCount;
     }
 }
