@@ -25,7 +25,6 @@ class Main{
 	public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         initializeData();
-		System.out.println("Hello World!");
         boolean exitApp = false ;
         int menuChoice;
         do{
@@ -52,7 +51,7 @@ class Main{
                     System.out.println();
                     break;
                 case 4:
-                    showViewTransactionHistoryROW();
+                    showViewTransactionHistory();
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
                     System.out.println();
@@ -77,7 +76,7 @@ class Main{
         String name = scanner.nextLine().trim();
 
         System.out.print("Enter customer age: ");
-        int age = scanner.nextInt();
+        int age = helper.validateIntInput(scanner, 120);
 
         System.out.print("Enter customer contact: ");
         String contact = scanner.next().trim();
@@ -155,7 +154,6 @@ class Main{
     static void processTransaction(){
         TransactionType transactionType;
         menu.printTitle("PROCESS TRANSACTION");
-        scanner.reset();
         System.out.print("Enter Account number: ");
         String accountNo = scanner.nextLine().trim().toUpperCase();
         final Account account = accountManager.findAccount(accountNo);
@@ -224,7 +222,7 @@ class Main{
 
     }
 
-    static void showViewTransactionHistoryROW(){
+    static void showViewTransactionHistory(){
         menu.printTitle("VIEW TRANSACTION HISTORY");
         System.out.println();
         System.out.print("Enter ccount number: ");
@@ -234,6 +232,7 @@ class Main{
         Account account = accountManager.findAccount(accountNo);
         if (account == null) {
             System.out.println("Account not found");
+            return;
         }
 
         System.out.println("Account Details: ");

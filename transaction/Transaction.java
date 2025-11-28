@@ -17,12 +17,12 @@ public class Transaction{
     }
 
     static  int transactionCounter = 0;
-    private String transactionId;
-    private String accountNumber;
-    private TransactionType type;
-    private double amount;
-    private double balanceAfter;
-    private String timestamp;
+    private final String transactionId;
+    private final String accountNumber;
+    private final TransactionType type;
+    private final double amount;
+    private final double balanceAfter;
+    private final String timestamp;
 
     public void displayTransactionDetails(){
         System.out.println("Transaction Details \nAccount Number: " + this.accountNumber);

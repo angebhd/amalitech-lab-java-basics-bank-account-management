@@ -15,11 +15,8 @@ public class TransactionManager {
 
     public void viewTransactionsByAccount(String accountNumber){
         boolean found = false;
-        double deposits = 0;
-        double withdrawals = 0;
         for(int i =0; i < getTransactionCount(); i++){
             if(this.transactions[i].getAccountNumber().equals(accountNumber)){
-
                 if (!found) {
                     System.out.println();
                     System.out.println("___________________________________________");
@@ -27,25 +24,21 @@ public class TransactionManager {
                     System.out.println("_____________________________________________");
                     found=true;
                 }
-                double transactionType = this.transactions[i].getType().equals(TransactionType.DEPOSIT) ? 1 : -1;
-
-                if (transactionType > 0)
-                    deposits += this.transactions[i].getAmount();
-                else
-                    withdrawals += this.transactions[i].getAmount();
-
+                char transactionType = this.transactions[i].getType().equals(TransactionType.DEPOSIT) ? '+' : '-';
                 System.out.println(this.transactions[i].getTransactionId() + " | " + this.transactions[i].getTimestamp() + " | " +
-                        this.transactions[i].getType().toString()  + " | $" + transactionType*this.transactions[i].getAmount() + " | $" +
+                        this.transactions[i].getType().toString()  + " | "+ transactionType +"$" + this.transactions[i].getAmount() + " | $" +
                         this.transactions[i].getBalanceAfter());
             }
         }
         if (found){
+            final double totalDeposit =  calculateTotalDeposits(accountNumber);
+            final double totalWithdrawal =  calculateTotalWithdrawals(accountNumber);
             System.out.println();
             System.out.println("Total transactions: " + transactions.length);
             System.out.println("___________________________________________");
-            System.out.println("Total deposits: $" + deposits);
-            System.out.println("Total withdrawals: $" + withdrawals);
-            System.out.println("Net change: $" + (deposits-withdrawals));
+            System.out.println("Total deposits: $" + totalDeposit);
+            System.out.println("Total withdrawals: $" + totalWithdrawal);
+            System.out.println("Net change: $" + (totalDeposit-totalWithdrawal));
         }else
             System.out.println("No transactions recorded for this account");
 
@@ -54,6 +47,8 @@ public class TransactionManager {
     public double calculateTotalDeposits(String accountNumber){
         double sum = 0;
         for(Transaction transaction: this.transactions){
+            if(transaction == null)
+                return sum;
             if(transaction.getAccountNumber().equals(accountNumber) && transaction.getType().equals(TransactionType.DEPOSIT)){
                 sum+= transaction.getAmount();
             }
@@ -64,6 +59,8 @@ public class TransactionManager {
     public double calculateTotalWithdrawals(String accountNumber){
         double sum = 0;
         for(Transaction transaction: this.transactions){
+            if(transaction == null)
+                return sum;
             if(transaction.getAccountNumber().equals(accountNumber) && transaction.getType().equals(TransactionType.WITHDRAW)){
                 sum+= transaction.getAmount();
             }
