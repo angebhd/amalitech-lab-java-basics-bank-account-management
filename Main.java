@@ -51,7 +51,7 @@ class Main{
                     System.out.println();
                     break;
                 case 4:
-                    showViewTransactionHistory();
+                    viewTransactionHistory();
                     System.out.print("Press enter to continue...");
                     scanner.nextLine();
                     System.out.println();
@@ -222,7 +222,7 @@ class Main{
 
     }
 
-    static void showViewTransactionHistory(){
+    static void viewTransactionHistory(){
         menu.printTitle("VIEW TRANSACTION HISTORY");
         System.out.println();
         System.out.print("Enter ccount number: ");

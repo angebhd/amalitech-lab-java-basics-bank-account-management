@@ -1,6 +1,6 @@
 package transaction;
 
-public class TransactionManager {
+public class TransactionManager implements Transactable {
     private final Transaction[] transactions = new Transaction[200];
     private int transactionCount = 0;
 
@@ -70,5 +70,10 @@ public class TransactionManager {
 
     public int getTransactionCount(){
         return this.transactionCount;
+    }
+
+    @Override
+    public boolean processTransaction(double amount, TransactionType type) {
+        return false;
     }
 }
