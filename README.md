@@ -3,6 +3,7 @@ This is a bank account management CLI application, build with Java only
 
 **By Ange Buhendwa**
 
+### The lab 2 is at this repository: [Clean code, Exceptions and testing](https://github.com/angebhd/amalitech-lab-clean-code-and-testing)
 
 ## Overview
 A console-based bank account management system that allows users to create accounts, manage transactions, and view account details. The application supports different customer types (Regular and Premium) and account types (Savings and Checking) with specific features and benefits.
